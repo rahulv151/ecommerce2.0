@@ -1,0 +1,226 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}MyStore{% endblock %}</title>
+  
+    <!-- Favicon links -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <script src="{% static 'js/bootstrap.min.css' %}"></script>
+</head>
+
+<body>
+  <!-- Header / Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top py-4" role="navigation">
+    <div class="container-fluid px-4">
+      <!-- Mobile View (visible below 992px) -->
+      <div class="d-lg-none w-100">
+        <!-- First Row: Toggle, Brand, Icons -->
+        <div class="mobile-first-row">
+          <!-- Mobile toggle -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Brand for mobile -->
+          <a class="navbar-brand mobile-only" href="{% url 'index' %}" aria-label="MyStore Home">
+            <img src="{% static 'images/logo-mobile.png' %}" alt="">
+          </a>
+          <!-- Mobile Icons -->
+          <div class="mobile-icons text-center">
+            <a class="utility-icon position-relative d-flex flex-column align-items-center text-decoration-none d-none" href="#" aria-label="Wishlist">
+              <i class="bi bi-heart"></i>
+              <div style="font-size: 0.75rem;">Wishlist</div>
+            </a>
+            <a class="utility-icon position-relative d-flex flex-column align-items-center text-decoration-none" href="{% url 'cart' %}" aria-label="Cart">
+              <i class="bi bi-cart3"></i>
+              <div style="font-size: 0.75rem;">Cart</div>
+            </a>
+            <a class="utility-icon d-flex flex-column align-items-center text-decoration-none" href="{% if user.is_authenticated %}{% url 'logout' %}{% else %}{% url 'login' %}{% endif %}" aria-label="User">
+              <i class="bi bi-person-circle"></i>
+              <div style="font-size: 0.75rem;"> {% if user.is_authenticated %}
+                Welcome {{user.username}}!
+                {% else %}
+                Login
+                {% endif %}</div>
+            </a>
+          </div>
+        </div>
+        <!-- Second Row: Search Bar -->
+        <div class="mobile-search-row">
+          <form class="w-100" role="search" method="post" action="{% url 'search' %}">
+            {% csrf_token %}
+            <div class="input-group rounded-pill overflow-hidden shadow-sm w-100">
+              <span class="input-group-text">
+                <i class="bi bi-search text-muted"></i>
+              </span>
+              <input type="search" class="form-control" name="q" placeholder="Search..." aria-label="Search" />
+              <button class="btn btn-primary" type="submit">Go</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Desktop View (visible above 992px) -->
+      <!-- Brand for desktop -->
+      <a class="navbar-brand d-none d-lg-flex" href="{% url 'index' %}" aria-label="MyStore Home">
+        <img src="{% static 'images/logo.png' %}" alt="">
+      </a>
+      <!-- Collapse content (desktop navigation links, desktop search, desktop icons) -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Nav links (desktop) -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="#">Smartphones</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Laptops & Tablets</a></li> {# Placeholder, update as needed #}
+          <li class="nav-item"><a class="nav-link" href="#">TVs & Audio</a></li> {# Placeholder, update as needed #}
+          <li class="nav-item"><a class="nav-link" href="#">Cameras & Drones</a></li> {# Placeholder, update as needed #}
+          <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li> {# Placeholder, update as needed #}
+          
+          
+          {% if user.is_authenticated and user.is_superuser %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'inserProd' %}">Insert Product</a></li>
+          {% endif %}
+        </ul>
+        <!-- Search (Desktop only) -->
+        <div class="navbar-search-wrapper mx-lg-3 d-none d-lg-block">
+          <form class="d-flex" role="search" method="post" action="{% url 'search' %}">
+            {% csrf_token %}
+            <div class="input-group rounded-pill overflow-hidden shadow-sm w-100">
+              <span class="input-group-text"><i class="bi bi-search text-muted"></i></span>
+              <input type="search" class="form-control" name="q" placeholder="Search..." aria-label="Search" />
+              <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+          </form>
+        </div>
+        <!-- Icons (Desktop only) -->
+        <ul class="navbar-nav flex-row align-items-center ms-lg-2 d-none d-lg-flex text-center">
+          <li class="nav-item me-2 position-relative">
+            <a class="nav-link utility-icon d-flex flex-column align-items-center text-decoration-none d-none" href="#">
+              <i class="bi bi-heart"></i>
+              <div style="font-size: 0.75rem;">Wishlist</div>
+            </a>
+          </li>
+          <li class="nav-item me-2 position-relative">
+            <a class="nav-link utility-icon d-flex flex-column align-items-center text-decoration-none" href="{% url 'cart' %}">
+              <i class="bi bi-cart3"></i>
+              <div style="font-size: 0.75rem;">Cart</div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link utility-icon d-flex flex-column align-items-center text-decoration-none" href="{% if user.is_authenticated %}{% url 'logout' %}{% else %}{% url 'login' %}{% endif %}">
+              <i class="bi bi-person-circle"></i>
+              <div style="font-size: 0.75rem;">
+                {% if user.is_authenticated %}
+                Welcome {{user.username}}!
+                {% else %}
+                Login
+                {% endif %}
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <main class="container-fluid p-0">
+
+      {% block body %}
+
+
+      {% endblock %}
+
+  </main>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-fluid px-4">
+      <div class="row">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <a class="footer-brand" href="{% url 'index' %}" aria-label="MyStore Home">
+            <i class="bi bi-shop"></i>SmartMart
+          </a>
+          <p class="text-white-50">
+            SmartMart is your one-stop shop for the latest electronics. We offer a wide range of products
+            from leading brands with exceptional customer service.
+          </p>
+          <div class="social-icons mt-4">
+            <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://twitter.com/i/flow/login" target="_blank" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+            <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2 col-6">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="#">About Us</a></li> {# No direct equivalent in old layout, keeping as placeholder #}
+            <li><a href="#">Contact Us</a></li> {# No direct equivalent in old layout, keeping as placeholder #}
+            <li><a href="#">Privacy Policy</a></li> {# No direct equivalent in old layout, keeping as placeholder #}
+            <li><a href="#">Terms of Service</a></li> {# No direct equivalent in old layout, keeping as placeholder #}
+            <li><a href="#">FAQ</a></li> {# No direct equivalent in old layout, keeping as placeholder #}
+          </ul>
+        </div>
+        <div class="col-md-2 col-6">
+          <h5>Categories</h5>
+          <ul class="list-unstyled">
+            {# These were hardcoded, keeping them as placeholders. You'd likely populate these dynamically #}
+            <li><a href="#">Smartphones</a></li>
+            <li><a href="#">Laptops</a></li>
+            <li><a href="#">TVs & Audio</a></li>
+            <li><a href="#">Cameras</a></li>
+            <li><a href="#">Accessories</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Contact Info</h5>
+          <ul class="list-unstyled">
+            <li><i class="bi bi-geo-alt-fill me-2"></i> "Abc apt" <br> thane west<br> Mumbai-123456</li>
+            <li><i class="bi bi-phone-fill me-2"></i> +91 0000000000</li> {# Placeholder, no direct phone from old #}
+            <li><i class="bi bi-envelope-fill me-2"></i> support@smartmart.com</li> {# Placeholder, no direct email from old #}
+          </ul>
+        </div>
+      </div>
+      <div class="row footer-bottom text-center">
+        <div class="col-12">
+          <p class="mb-0">&copy; 2024 SmartMart. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const navbarCollapse = document.getElementById('navbarSupportedContent');
+      const mobileSearchRow = document.querySelector('.mobile-search-row');
+      // Hide search bar when navbar expands
+      navbarCollapse.addEventListener('show.bs.collapse', function() {
+        if (mobileSearchRow) {
+          mobileSearchRow.style.display = 'none';
+        }
+      });
+      // Show search bar again when navbar collapses
+      navbarCollapse.addEventListener('hide.bs.collapse', function() {
+        if (mobileSearchRow) {
+          mobileSearchRow.style.display = '';
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

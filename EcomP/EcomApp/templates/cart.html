@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Ekart | Cart
+{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+    <div class="row g-4">
+        
+        <!-- Main Column -->
+        <!-- Logic: If cart has items, use 8 columns. If empty, use full width (12 columns) -->
+        <div class="{% if cart_items %}col-lg-8{% else %}col-12{% endif %} col-md-12">
+            
+            <!-- Customer Details Card (Only show if cart has items) -->
+            {% if cart_items %}
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Customer Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-2">
+                            <p class="mb-1 text-muted small">Name</p>
+                            <p class="fw-bold">{{ user.username }}</p>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <p class="mb-1 text-muted small">Phone No.</p>
+                            <p class="fw-bold">123456</p>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <p class="mb-1 text-muted small">Email</p>
+                            <p class="fw-bold text-break">{{ user.email }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Cart Details Header -->
+            
+            {% for x in cart_items %}
+            <div class="card shadow-sm mb-3 border-0">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-3 p-3 text-center bg-light rounded-start">
+                        <img src="{{ x.product.image.url }}" class="img-fluid rounded" 
+                             style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title mb-1">{{ x.product.product_name }}</h5>
+                                    <p class="text-success fw-bold fs-5 mb-2">₹ {{ x.product.price }}</p>
+                                </div>
+                                <div class="input-group input-group-sm" style="width: 120px;">
+                                    <a href="/updateqty/0/{{ x.product.product_id }}" class="btn btn-outline-secondary">-</a>
+                                    <input type="number" class="form-control text-center bg-white" value="{{ x.quantity }}" readonly>
+                                    <a href="/updateqty/1/{{ x.product.product_id }}" class="btn btn-outline-success">+</a>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted small mb-3">{{ x.product.desc }}</p>
+                            <div class="d-flex gap-2">
+                                <a href="/removeCart/{{ x.product_id }}" class="btn btn-outline-danger btn-sm">Remove</a>
+                                <a href="#" class="btn btn-primary btn-sm">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Empty State (Now displays Full Width and centered because col-12 is active) -->
+            <div class="alert alert-warning text-center p-5 shadow-sm rounded-3 border-0" role="alert">
+                <h4 class="alert-heading display-6 mb-3"><i class="bi bi-cart-x"></i></h4>
+                <h4>Your Cart Is Empty</h4>
+                <p class="mb-0 text-muted">Add items to get started!</p>
+                <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Right Column: Order Summary (Only show if cart has items) -->
+        {% if cart_items %}
+        <div class="col-lg-4 col-md-12">
+            <div class="card shadow-sm border-0 position-sticky" style="top: 20px;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0 text-nowrap">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Total Products
+                            <span class="badge bg-secondary rounded-pill">{{ items }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <strong>Total Amount</strong>
+                            <span class="fs-5 fw-bold text-success">{{ total }}</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="d-grid">
+                        <a href="{% url 'viewOrder' %}" class="btn btn-danger btn-lg">
+                            Place Order
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</div>
+{% endblock %}

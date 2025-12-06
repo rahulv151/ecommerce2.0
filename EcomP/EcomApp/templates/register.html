@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ekart | Register
+{% endblock %}
+
+{% block body %}
+<!-- 1. Load Tailwind CSS and Config -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    primary: '#1d4ed8', // Blue-700
+                    secondary: '#facc15', // Amber-400
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    /* 
+       This CSS targets the Django-generated inputs automatically 
+       to apply the Tailwind design found in your target layout.
+    */
+    .django-form-field input,
+    .django-form-field select,
+    .django-form-field textarea {
+        width: 100%;
+        padding: 0.45rem; /* p-3 */
+        border-width: 1px;
+        border-color: #d1d5db; /* border-gray-300 */
+        border-radius: 0.5rem; /* rounded-lg */
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+        transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        outline: none;
+    }
+
+    /* Focus State */
+    .django-form-field input:focus,
+    .django-form-field select:focus {
+        border-color: #1d4ed8; /* focus:border-primary */
+        --tw-ring-color: #1d4ed8;
+        --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+    }
+</style>
+
+<!-- 2. The Main Container (Tailwind Layout) -->
+<div class="bg-gray-100 min-h-screen flex items-center justify-center font-sans p-4">
+
+    <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl border border-gray-200">
+        
+        <!-- Header / Icon -->
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6 flex items-center justify-center">
+            <svg class="w-8 h-8 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0h-3zm-6-2.5a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0z"></path>
+            </svg>
+            <span id="form-title">REGISTER ACCOUNT</span>
+        </h1>
+        
+        
+
+        <!-- Django Messages (Converted to Tailwind Styles) -->
+        {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                <div class="flex justify-between items-center bg-yellow-50 border-l-4 border-yellow-400 p-4 text-yellow-700 rounded shadow-sm" role="alert">
+                    <p class="text-sm font-medium">{{ message }}</p>
+                    <button type="button" class="text-yellow-700 hover:text-yellow-900" onclick="this.parentElement.remove()">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %} 
+
+        <!-- Django Form Logic Wrapped in Tailwind -->
+        <form method="POST" action="" class="space-y-4">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="django-form-field">
+                    <!-- Label -->
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        {{ field.label }}
+                    </label>
+                    
+                    <!-- Input -->
+                    {{ field }}
+                    
+                    <!-- Error Handling -->
+                    {% if field.errors %}
+                        <div class="text-red-500 text-xs mt-1 font-medium">
+                            {{ field.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="w-full py-3 mt-6 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all">
+                Create User
+            </button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

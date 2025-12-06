@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Ekart | Payment
+{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-10">
+            
+            <!-- Payment Card -->
+            <div class="card shadow border-0 rounded-3">
+                <!-- Header -->
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-shield-lock-fill me-2"></i>Secure Payment
+                    </h5>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body p-5 text-center">
+                    
+                    <div class="mb-4">
+                        <i class="bi bi-credit-card-2-front text-secondary" style="font-size: 4rem;"></i>
+                    </div>
+
+                    <h4 class="card-title mb-3">Complete Your Order</h4>
+                    <p class="card-text text-muted mb-4">
+                        You are about to pay securely via Razorpay. Click the button below to proceed.
+                    </p>
+
+                    <!-- Payment Button -->
+                    <button id="rzp-button1" class="btn btn-success btn-lg w-100 shadow-sm mb-3">
+                        Pay Now <i class="bi bi-arrow-right-circle ms-2"></i>
+                    </button>
+                    
+                    <!-- Back Button -->
+                    <a href="{% url 'viewOrder' %}" class="btn btn-outline-secondary btn-sm">
+                        Cancel & Go Back
+                    </a>
+
+                    <div class="mt-4 pt-3 border-top">
+                        <small class="text-muted">
+                            <i class="bi bi-lock"></i> Your transaction is encrypted and secured.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Razorpay Script (Logic Unchanged) -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "rzp_test_pFkJjUvRgGGsSd", // Enter the Key ID generated from the Dashboard
+    "amount": "{{amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp", //your business name
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "{{data.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    
+    "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+        "name": "Gaurav Kumar", //your customer's name
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000" //Provide the customer's phone number for better conversion rates 
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#198754" // Changed color to match Bootstrap 'success' green
+    }
+};
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock %}

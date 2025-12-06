@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+Ekart | Login
+{% endblock %}
+{% block body %}
+<div class="login-page">
+    <div class="login-wrapper">
+        <div class="login-branding">
+            <h1>Exclusive Deals Await!</h1>
+            <p>Log in to manage your orders, track shipments, and unlock personalized recommendations just for you.</p>
+        </div>
+        <div class="login-container">
+            <form method="post" action="{% url 'login' %}" class="login-form">
+                {% csrf_token %}
+                <h2>Welcome Back!</h2>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter Username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit">Log In</button>
+                <p class="forgot-password"><a href="#">Forgot your password?</a></p>
+                <p class="signup-link">New to our store? <a href="{% url 'register' %}">Create an account</a></p>
+                <p class="back-button">
+                    <a href="{% url 'index' %}">← Back to Home</a>
+                </p>
+            </form>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>  
+{% endblock %}

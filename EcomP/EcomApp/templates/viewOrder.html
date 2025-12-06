@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}
+        Ekart | ViewOrder
+{% endblock %}
+{% block body %}
+<div class="container py-4">
+    <div class="row g-4">
+        
+        <!-- Main Column -->
+        <div class="{% if cart_items %}col-lg-8{% else %}col-12{% endif %} col-md-12">
+            
+            <!-- Back Button (Only show if cart has items) -->
+            {% if cart_items %}
+            <div class="mb-3">
+                <a href="/cart" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> Back to Cart
+                </a>
+            </div>
+            
+            <!-- Customer Details Card -->
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Customer Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-2">
+                            <p class="mb-1 text-muted small">Name</p>
+                            <p class="fw-bold">{{ user.username }}</p>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <p class="mb-1 text-muted small">Phone No.</p>
+                            <p class="fw-bold">123456</p>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <p class="mb-1 text-muted small">Email</p>
+                            <p class="fw-bold text-break">{{ user.email }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Order Items Header -->
+            <h5 class="mb-3 text-secondary">Order Review</h5>
+            
+            {% for x in cart_items %}
+            <div class="card shadow-sm mb-3 border-0">
+                <div class="row g-0 align-items-center">
+                    <!-- Product Image -->
+                    <div class="col-md-3 p-3 text-center bg-light rounded-start">
+                        <img src="{{ x.product.image.url }}" class="img-fluid rounded" 
+                             style="max-height: 150px; object-fit: contain;">
+                    </div>
+                    
+                    <!-- Product Details -->
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title mb-1">{{ x.product.product_name }}</h5>
+                                    <p class="text-success fw-bold fs-5 mb-1">₹ {{ x.product.price }}</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-secondary">Qty: {{ x.quantity }}</span>
+                                </div>
+                            </div>
+                            
+                            <p class="card-text text-muted small mt-2 mb-0">
+                                <b>Description:</b> {{ x.product.desc }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Empty State -->
+            <div class="alert alert-warning text-center p-5 shadow-sm rounded-3 border-0" role="alert">
+                <h4 class="alert-heading display-6 mb-3"><i class="bi bi-cart-x"></i></h4>
+                <h4>No Items to Checkout</h4>
+                <p class="mb-0 text-muted">Your cart is empty.</p>
+                <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+            </div>
+            {% endfor %}
+            
+        </div>
+    
+        <!-- Right Column: Payment Summary (Only show if cart has items) -->
+        {% if cart_items %}
+        <div class="col-lg-4 col-md-12">
+            <!-- Added margin-top to align with the cards below the back button -->
+            <div class="card shadow-sm border-0 position-sticky" style="top: 20px; margin-top: 46px;"> 
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0 text-nowrap">Payment Summary</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Total Products
+                            <span class="badge bg-secondary rounded-pill">{{ items }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <strong>Total Amount</strong>
+                            <span class="fs-5 fw-bold text-success">{{ total }}</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'payment' %}" class="btn btn-danger btn-lg">
+                            Make Payment
+                        </a>
+                        <!-- Optional Cancel Button in Sidebar as well -->
+                        <!-- <a href="/cart" class="btn btn-outline-secondary">Cancel</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+    </div>
+</div>
+{% endblock %}

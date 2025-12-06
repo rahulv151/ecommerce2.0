@@ -1,0 +1,1202 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive Header - MyStore</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet" />
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <style>
+      body {
+        padding-top: 110px;
+        font-family: "Inter", sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+      }
+      .navbar-brand {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: #0d6efd !important;
+        display: flex;
+        align-items: center;
+      }
+      .navbar-brand .bi {
+        font-size: 1.6rem;
+        margin-right: 0.5rem;
+      }
+      .navbar-nav .nav-link {
+        font-weight: 500;
+        color: #333 !important;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      .navbar-nav .nav-link:hover {
+        color: #0d6efd !important;
+        
+      }
+      .navbar-nav .nav-link.active {
+        color: #0d6efd !important;
+        
+        font-weight: 600;
+      }
+      .utility-icon {
+        font-size: 1.3rem;
+        color: #555;
+        transition: color 0.2s, transform 0.2s;
+        padding: 0.25rem;
+        border-radius: 0.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .utility-icon:hover {
+        color: #0d6efd;
+        transform: translateY(-2px);
+        background-color: rgba(13, 110, 253, 0.05);
+      }
+      .badge.position-absolute {
+        transform: translate(50%, -50%);
+        font-size: 0.65rem;
+        padding: 0.3em 0.5em;
+        min-width: 1.5em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+      }
+      .input-group-text {
+        background-color: transparent;
+        border: none;
+        padding-left: 0.75rem;
+      }
+      .input-group input {
+        font-size: 0.95rem;
+        padding: 0.6rem 0.75rem;
+        border: none;
+        box-shadow: none;
+      }
+      .input-group input:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: #0d6efd;
+      }
+      .input-group.rounded-pill {
+        border: 1px solid #dee2e6;
+      }
+      .input-group.rounded-pill:focus-within {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .input-group.rounded-pill .form-control,
+      .input-group.rounded-pill .input-group-text,
+      .input-group.rounded-pill .btn {
+        border-radius: 0 !important;
+      }
+      .input-group.rounded-pill .input-group-text {
+        border-top-left-radius: 50rem !important;
+        border-bottom-left-radius: 50rem !important;
+      }
+      .input-group.rounded-pill .btn {
+        border-top-right-radius: 50rem !important;
+        border-bottom-right-radius: 50rem !important;
+      }
+      .dropdown-menu {
+        min-width: 12rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border: none;
+      }
+      .dropdown-item {
+        padding: 0.6rem 1rem;
+        font-weight: 500;
+      }
+      .dropdown-item:hover,
+      .dropdown-item:active {
+        background-color: rgba(13, 110, 253, 0.08);
+        color: #0d6efd;
+      }
+      /* Mobile layout: Specific arrangement for small screens */
+      @media (max-width: 991.98px) {
+        .navbar-toggler {
+          margin-right: 0.5rem;
+          /* Space between toggle and brand on mobile */
+        }
+        .navbar-brand.mobile-only {
+          margin-right: auto;
+          /* Pushes the brand to the left of icons */
+        }
+        .mobile-first-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+        }
+        .mobile-icons {
+          display: flex;
+          gap: 0.5rem;
+        }
+        .mobile-search-row {
+          width: 100%;
+          padding-top: 0.5rem;
+          /* Space between first and second row */
+        }
+        /* Hide desktop elements on mobile */
+        .navbar-search-wrapper,
+        .navbar-nav.flex-row,
+        .navbar-brand.d-lg-flex {
+          display: none !important;
+        }
+      }
+      /* Footer specific styles */
+      .footer {
+        background-color: #212529;
+        /* Dark background */
+        color: #f8f9fa;
+        /* Light text */
+        padding: 4rem 0;
+        font-family: "Inter", sans-serif;
+      }
+      .footer a {
+        color: #f8f9fa;
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer a:hover {
+        color: #0d6efd;
+        /* Primary blue on hover */
+      }
+      .footer h5 {
+        color: #0d6efd;
+        /* Primary blue for headings */
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        font-family: "Poppins", sans-serif;
+      }
+      .footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer ul li {
+        margin-bottom: 0.75rem;
+      }
+      .footer .social-icons a {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        color: #adb5bd;
+        /* Lighter grey for social icons */
+      }
+      .footer .social-icons a:hover {
+        color: #0d6efd;
+      }
+      .footer .footer-brand {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: #0d6efd !important;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .footer .footer-brand .bi {
+        font-size: 1.6rem;
+        margin-right: 0.5rem;
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1.5rem;
+        margin-top: 2rem;
+        color: #adb5bd;
+      }
+      /* -------Hero Section------------- */
+      .hero-section {
+        min-height: 550px;
+        /* Set a minimum height for the hero section */
+        position: relative;
+        color: white;
+        /* Ensure text is readable */
+      }
+      /* Pseudo-element for the background image */
+      .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://img.freepik.com/free-photo/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera_1258-118763.jpg?semt=ais_hybrid&w=740&q=80');
+        /* Use your desired image */
+        background-size: cover;
+        background-position: right center;
+        /* Focus on the right side of the image */
+        filter: brightness(0.7);
+        /* Darken the background image */
+        z-index: -1;
+      }
+      .hero-content-container {
+        z-index: 1;
+        /* Ensure content is above the pseudo-element background */
+        width: 100%;
+      }
+      .hero-text-col {
+        /* On large screens, this column acts like the 'dark' part */
+        min-height: 550px;
+        /* Match hero section min-height for desktop */
+      }
+      .hero-text-wrapper {
+        max-width: 600px;
+      }
+      .hero-section h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+      }
+      .hero-section p {
+        font-size: 1.15rem;
+        line-height: 1.6;
+      }
+      .hero-section .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+      }
+      .hero-section .btn-outline-light {
+        color: white;
+        border-color: white;
+      }
+      .hero-section .btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: white;
+      }
+      /* Mobile adjustments */
+      @media (max-width: 991.98px) {
+        .hero-section {
+          min-height: 450px;
+          /* Adjust min-height for mobile */
+          text-align: center;
+          /* Center text on mobile */
+        }
+        .hero-section::before {
+          background-position: center center;
+          /* Adjust background image position for mobile */
+        }
+        .hero-text-col {
+          /* On mobile, this column spans full width and has a transparent background */
+          min-height: auto;
+          /* Allow height to adjust to content */
+          background-color: rgba(0, 0, 0, 0.5);
+          /* Stronger overlay for mobile readability */
+          padding: 3rem 1rem !important;
+          /* Adjust padding for mobile */
+        }
+        .hero-text-wrapper {
+          padding: 1rem !important;
+        }
+        .hero-section h1 {
+          font-size: 2.5rem;
+        }
+        .hero-section p {
+          font-size: 1rem;
+        }
+        .hero-text-wrapper .d-sm-flex {
+          justify-content: center !important;
+          /* Ensure buttons are centered on mobile */
+        }
+      }
+      @media (max-width: 575.98px) {
+        .hero-section h1 {
+          font-size: 2rem;
+        }
+        .hero-section p {
+          font-size: 0.9rem;
+        }
+        .hero-text-col {
+          padding: 2rem 1rem !important;
+        }
+      }
+
+        .category-card {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        /* Icon styling */
+        .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 9999px; /* Full rounded circle */
+            background-color: #e0f2fe; /* Light blue background */
+            margin-bottom: 1rem;
+        }
+        .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #222;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: #007bff; /* Primary brand color */
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* --- Featured Categories Section --- */
+.featured-categories-section {
+    padding: 60px 0;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.category-carousel {
+    position: relative;
+    overflow: hidden; /* Hide cards outside the wrapper */
+    margin: 0 -20px; /* Adjust if you want cards to fill full width or extend slightly */
+}
+
+.category-cards-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    padding-bottom: 20px; /* Space for dots */
+    justify-content: center; /* Center cards if there are fewer than max-width allows */
+}
+
+.category-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    text-align: center;
+    padding: 25px;
+    margin: 0 10px; /* Space between cards */
+    min-width: 280px; /* Adjust card width */
+    max-width: 300px; /* Max card width */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none; /* Remove underline from anchor */
+    color: inherit;
+    flex-shrink: 0; /* Prevent cards from shrinking */
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card img {
+    max-width: 100%;
+    height: 150px; /* Fixed height for images */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.category-card h3 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.btn-shop-now {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-shop-now:hover {
+    background-color: #0056b3;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-arrow.left-arrow {
+    left: 20px;
+}
+
+.carousel-arrow.right-arrow {
+    right: 20px;
+}
+
+.carousel-dots {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.carousel-dots .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+    background-color: #007bff;
+}
+
+/* --- New Arrivals Section --- */
+.new-arrivals-section {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 30px;
+    justify-content: center;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.new-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #dc3545; /* Red for "New" */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 5;
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px; /* Fixed height for product images */
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.product-card h4 {
+    font-size: 1.4em;
+    margin-bottom: 8px;
+    color: #333;
+    padding: 0 15px;
+}
+
+.product-card .price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.product-card .description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.product-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 15px;
+}
+
+.btn-add-to-cart, .btn-quick-view {
+    border: 1px solid #007bff;
+    padding: 10px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.btn-add-to-cart {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-quick-view {
+    background-color: #fff;
+    color: #007bff;
+}
+
+.btn-quick-view:hover {
+    background-color: #e9f5ff;
+    color: #0056b3;
+}
+
+/* --- Promotional Banner (Optional) --- */
+.promo-banner {
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Blue gradient */
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+    margin-top: 60px;
+}
+
+.promo-banner h3 {
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.promo-banner p {
+    font-size: 1.2em;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.promo-banner .btn-primary {
+    background-color: #fff;
+    color: #007bff;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.promo-banner .btn-primary:hover {
+    background-color: #f0f0f0;
+    color: #0056b3;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1024px) {
+    .category-carousel {
+        margin: 0; /* Remove negative margin on smaller screens */
+        padding: 0 20px; /* Add internal padding */
+    }
+    .category-cards-wrapper {
+        justify-content: flex; /* Allow overflow for scrolling */
+
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        scroll-snap-type: x mandatory; /* Snap to cards */
+        padding-bottom: 20px;
+    }
+    .category-card {
+        scroll-snap-align: start; /* Snap point */
+        min-width: 250px;
+        margin: 0 10px 0 0; /* Only right margin */
+    }
+    .category-carousel .carousel-arrow {
+        display: none; /* Hide arrows on smaller screens for touch-based scrolling */
+    }
+    .carousel-dots {
+        margin-top: 15px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+    .promo-banner h3 {
+        font-size: 2em;
+    }
+    .promo-banner p {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    .featured-categories-section, .new-arrivals-section, .promo-banner {
+        padding: 40px 0;
+    }
+    .category-card {
+        min-width: 220px;
+        padding: 20px;
+    }
+    .product-grid {
+        grid-template-columns: 1fr 1fr; /* Two columns on tablets */
+        gap: 15px;
+    }
+    .product-card h4 {
+        font-size: 1.2em;
+    }
+    .product-card .price {
+        font-size: 1.3em;
+    }
+    .btn-add-to-cart, .btn-quick-view {
+        padding: 8px 15px;
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+    .category-card {
+        min-width: 180px;
+        margin: 0 8px 0 0;
+    }
+    .category-card h3 {
+        font-size: 1.3em;
+    }
+    .btn-shop-now {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    .product-grid {
+        grid-template-columns: 1fr; /* Single column on small phones */
+    }
+    .product-card {
+        width: 90%; /* Occupy most of the width */
+        margin: 0 auto; /* Center single card */
+    }
+    .promo-banner h3 {
+        font-size: 1.6em;
+    }
+    .promo-banner p {
+        font-size: 0.9em;
+    }
+    .promo-banner .btn-primary {
+        padding: 12px 30px;
+        font-size: 1em;
+    }
+}
+    </style>
+  </head>
+  <body>
+    <!-- Header / Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top py-4" role="navigation">
+      <div class="container-fluid px-4">
+        <!-- Mobile View (visible below 992px) -->
+        <div class="d-lg-none w-100">
+          <!-- First Row: Toggle, Brand, Icons -->
+          <div class="mobile-first-row">
+            <!-- Mobile toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Brand for mobile -->
+            <a class="navbar-brand mobile-only" href="#" aria-label="MyStore Home">
+              <img src="E:\FSD\Practice Projects\DJango\Ecommerce\EcomP\EcomApp\static\images\logo-mobile.png" alt="">
+            </a>
+            <!-- Mobile Icons -->
+            <!-- Mobile Icons -->
+            <div class="mobile-icons text-center">
+              <a class="utility-icon position-relative d-flex flex-column align-items-center text-decoration-none"
+                href="#" aria-label="Wishlist">
+                <i class="bi bi-heart"></i>
+                
+                <div style="font-size: 0.75rem;">Wishlist</div>
+              </a>
+              <a class="utility-icon position-relative d-flex flex-column align-items-center text-decoration-none"
+                href="#" aria-label="Cart">
+                <i class="bi bi-cart3"></i>
+                
+                <div style="font-size: 0.75rem;">Cart</div>
+              </a>
+              <a class="utility-icon d-flex flex-column align-items-center text-decoration-none" href="#"
+                aria-label="User">
+                <i class="bi bi-person-circle"></i>
+                <div style="font-size: 0.75rem;">Account</div>
+              </a>
+            </div>
+          </div>
+          <!-- Second Row: Search Bar -->
+          <div class="mobile-search-row">
+            <form class="w-100" role="search">
+              <div class="input-group rounded-pill overflow-hidden shadow-sm w-100">
+                <span class="input-group-text">
+                  <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search" />
+                <button class="btn btn-primary" type="submit">Go</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Desktop View (visible above 992px) -->
+        <!-- Brand for desktop -->
+        <a class="navbar-brand d-none d-lg-flex" href="#" aria-label="MyStore Home">
+          <img src="E:\FSD\Practice Projects\DJango\Ecommerce\EcomP\EcomApp\static\images\logo.png" alt="">
+        </a>
+        <!-- Collapse content (desktop navigation links, desktop search, desktop icons) -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Nav links (desktop) -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link active" href="#">Smartphones</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Laptops & Tablets</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">TVs & Audio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Cameras & Drones</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li>
+          </ul>
+          <!-- Search (Desktop only) -->
+          <div class="navbar-search-wrapper mx-lg-3 d-none d-lg-block">
+            <form class="d-flex" role="search">
+              <div class="input-group rounded-pill overflow-hidden shadow-sm w-100">
+                <span class="input-group-text"><i class="bi bi-search text-muted"></i></span>
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search" />
+                <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+            </form>
+          </div>
+          <!-- Icons (Desktop only) -->
+          <!-- Icons (Desktop only) -->
+          <ul class="navbar-nav flex-row align-items-center ms-lg-2 d-none d-lg-flex text-center">
+            <li class="nav-item me-2 position-relative">
+              <a class="nav-link utility-icon d-flex flex-column align-items-center text-decoration-none" href="#">
+                <i class="bi bi-heart"></i>
+                
+                <div style="font-size: 0.75rem;">Wishlist</div>
+              </a>
+            </li>
+            <li class="nav-item me-2 position-relative">
+              <a class="nav-link utility-icon d-flex flex-column align-items-center text-decoration-none" href="#">
+                <i class="bi bi-cart3"></i>
+                
+                <div style="font-size: 0.75rem;">Cart</div>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link utility-icon d-flex flex-column align-items-center text-decoration-none" href="#">
+                <i class="bi bi-person-circle"></i>
+                <div style="font-size: 0.75rem;">Account</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Main content -->
+    <main class="container-fluid p-0">
+      <!-- Hero Section -->
+      <section class="hero-section position-relative overflow-hidden mb-5 d-flex align-items-center">
+        <div class="container-fluid px-0 hero-content-container">
+          <div class="row g-0">
+            <div class="col-lg-6 d-flex align-items-center hero-text-col p-4 p-md-5 p-lg-0">
+              <div class="text-center text-lg-start mx-auto p-4 p-lg-5 hero-text-wrapper">
+                <h1 class="display-4 fw-bold mb-3">Discover the Future of Tech</h1>
+                <p class="lead mb-4 opacity-75">
+                  Explore our curated collection of the latest smartphones, laptops, TVs, and more.
+                  Unbeatable prices and cutting-edge innovation await!
+                </p>
+                <div class="d-grid d-sm-flex justify-content-center justify-content-lg-start gap-3">
+                  <a href="#" class="btn btn-primary btn-lg px-4 py-2 fw-bold">Shop Now</a>
+                  <a href="#" class="btn btn-outline-light btn-lg px-4 py-2">Learn More</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 hero-image-col d-none d-lg-block">
+              <!-- This column will contain or align with the main image on desktop -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+        <!-- After Hero Section: Category Showcase -->
+    <section id="category-showcase" class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+                    Shop by Category
+                </h2>
+                <p class="mt-4 text-xl text-gray-500">
+                    Find the perfect technology for your needs, from phones to drones.
+                </p>
+            </div>
+            
+            <!-- Category Grid -->
+            <!-- Layout: 2 columns on mobile, 3 on tablet, and 5 columns on large screens to fit all 5 items perfectly -->
+            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5 xl:gap-8">
+                
+                <!-- Card 1: Smartphones -->
+                <a href="/smartphones" class="category-card bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-center justify-center text-center hover:ring-2 hover:ring-indigo-500">
+                    <div class="icon-container">
+                        <!-- Smartphone Icon (Lucide-like SVG) -->
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">Smartphones</span>
+                    <span class="text-sm text-gray-500 mt-1">View Devices</span>
+                </a>
+
+                <!-- Card 2: Laptops & Tablets -->
+                <a href="/laptops-tablets" class="category-card bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-center justify-center text-center hover:ring-2 hover:ring-indigo-500">
+                    <div class="icon-container">
+                        <!-- Laptop Icon (Lucide-like SVG) -->
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25M7 17h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">Laptops & Tablets</span>
+                    <span class="text-sm text-gray-500 mt-1">Work & Play</span>
+                </a>
+
+                <!-- Card 3: TVs & Audio -->
+                <a href="/tvs-audio" class="category-card bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-center justify-center text-center hover:ring-2 hover:ring-indigo-500">
+                    <div class="icon-container">
+                        <!-- Monitor/TV Icon (Lucide-like SVG) -->
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l-2 2M15 19V6l2 2M5 13h14M12 21a2 2 0 002-2h-4a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">TVs & Audio</span>
+                    <span class="text-sm text-gray-500 mt-1">Entertainment Gear</span>
+                </a>
+
+                <!-- Card 4: Cameras & Drones -->
+                <a href="/cameras-drones" class="category-card bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-center justify-center text-center hover:ring-2 hover:ring-indigo-500">
+                    <div class="icon-container">
+                        <!-- Camera Icon (Lucide-like SVG) -->
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.865-1.3a2 2 0 011.664-.89h1.772a2 2 0 011.664.89l.865 1.3A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">Cameras & Drones</span>
+                    <span class="text-sm text-gray-500 mt-1">Capture Moments</span>
+                </a>
+
+                <!-- Card 5: Accessories -->
+                <a href="/accessories" class="category-card bg-white p-6 rounded-xl border border-gray-200 flex flex-col items-center justify-center text-center hover:ring-2 hover:ring-indigo-500">
+                    <div class="icon-container">
+                        <!-- Headphones Icon (Lucide-like SVG) -->
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.899a9 9 0 010 12.728M5.536 8.464a5 5 0 000 7.072m2.828-9.899a9 9 0 000 12.728M12 8c2.485 0 4 .92 4 2.05v4.95a1 1 0 01-1 1H9a1 1 0 01-1-1v-4.95C8 8.92 9.515 8 12 8z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">Accessories</span>
+                    <span class="text-sm text-gray-500 mt-1">Cables & Cases</span>
+                </a>
+
+                <!-- Note: The grid automatically handles the layout. On large screens (lg:), all five fit perfectly in one row. On smaller screens, they wrap to two or three columns. -->
+            </div>
+        </div>
+    </section>
+        <main>
+        <!-- Featured Categories Section -->
+        <section class="featured-categories-section">
+            <div class="container">
+                <h2>Shop Our Top Categories</h2>
+                <div class="category-carousel">
+                    <button class="carousel-arrow left-arrow"><i class="fas fa-chevron-left"></i></button>
+                    <div class="category-cards-wrapper">
+                        <!-- Category Card 1: Smartphones -->
+                        <a href="#smartphones" class="category-card">
+                            <img src="https://via.placeholder.com/300x200?text=Smartphones" alt="Smartphones">
+                            <h3>Smartphones</h3>
+                            <button class="btn-shop-now">Shop Now</button>
+                        </a>
+                        <!-- Category Card 2: Laptops & Tablets -->
+                        <a href="#laptops-tablets" class="category-card">
+                            <img src="https://via.placeholder.com/300x200?text=Laptops+%26+Tablets" alt="Laptops & Tablets">
+                            <h3>Laptops & Tablets</h3>
+                            <button class="btn-shop-now">Shop Now</button>
+                        </a>
+                        <!-- Category Card 3: TVs & Audio -->
+                        <a href="#tvs-audio" class="category-card">
+                            <img src="https://via.placeholder.com/300x200?text=TVs+%26+Audio" alt="TVs & Audio">
+                            <h3>TVs & Audio</h3>
+                            <button class="btn-shop-now">Shop Now</button>
+                        </a>
+                        <!-- Category Card 4: Cameras & Drones -->
+                        <a href="#cameras-drones" class="category-card">
+                            <img src="https://via.placeholder.com/300x200?text=Cameras+%26+Drones" alt="Cameras & Drones">
+                            <h3>Cameras & Drones</h3>
+                            <button class="btn-shop-now">Shop Now</button>
+                        </a>
+                        <!-- Category Card 5: Accessories -->
+                        <a href="#accessories" class="category-card">
+                            <img src="https://via.placeholder.com/300x200?text=Accessories" alt="Accessories">
+                            <h3>Accessories</h3>
+                            <button class="btn-shop-now">Shop Now</button>
+                        </a>
+                    </div>
+                    <button class="carousel-arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="carousel-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals Section -->
+        <section class="new-arrivals-section">
+            <div class="container">
+                <h2>New Arrivals</h2>
+                <div class="product-grid">
+                    <!-- Product Card 1 -->
+                    <div class="product-card">
+                        <span class="new-badge">NEW</span>
+                        <img src="https://via.placeholder.com/250x250?text=Wireless+Headphones" alt="Wireless Headphones">
+                        <h4>Wireless Headphones</h4>
+                        <p class="price">$249.99</p>
+                        <p class="description">Immersive Audio</p>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-quick-view">Quick View</button>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="product-card">
+                        <span class="new-badge">NEW</span>
+                        <img src="https://via.placeholder.com/250x250?text=Smartwatch" alt="Smartwatch">
+                        <h4>Smartwatch</h4>
+                        <p class="price">$189.99</p>
+                        <p class="description">Advanced Health Tracker</p>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-quick-view">Quick View</button>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="product-card">
+                        <span class="new-badge">NEW</span>
+                        <img src="https://via.placeholder.com/250x250?text=Portable+Speaker" alt="Portable Speaker">
+                        <h4>Portable Speaker</h4>
+                        <p class="price">$79.99</p>
+                        <p class="description">Powerful Sound On-Do-Go</p>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-quick-view">Quick View</button>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="product-card">
+                        <span class="new-badge">NEW</span>
+                        <img src="https://via.placeholder.com/250x250?text=Power+Bank" alt="Power Bank">
+                        <h4>Power Bank</h4>
+                        <p class="price">$39.99</p>
+                        <p class="description">Ultra-Fast Charging</p>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart">Add to Cart</button>
+                            <button class="btn-quick-view">Quick View</button>
+                        </div>
+                    </div>
+
+                    <!-- Add more product cards as needed -->
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Optional: Full Width Promotional Banner -->
+        <section class="promo-banner">
+            <div class="container">
+                <h3>Limited Time Offers!</h3>
+                <p>Don't miss out on incredible savings on your favorite tech.</p>
+                <a href="#deals" class="btn-primary">Shop All Deals</a>
+            </div>
+        </section>
+
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container-fluid px-4">
+        <div class="row">
+          <div class="col-md-4 mb-4 mb-md-0">
+            <a class="footer-brand" href="#" aria-label="MyStore Home">
+              <i class="bi bi-shop"></i>MyStore
+            </a>
+            <p class="text-white-50">
+              MyStore is your one-stop shop for the latest electronics. We offer a wide range of products
+              from leading brands with exceptional customer service.
+            </p>
+            <div class="social-icons mt-4">
+              <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+              <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="col-md-2 col-6">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 col-6">
+            <h5>Categories</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">Smartphones</a></li>
+              <li><a href="#">Laptops</a></li>
+              <li><a href="#">TVs & Audio</a></li>
+              <li><a href="#">Cameras</a></li>
+              <li><a href="#">Accessories</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact Info</h5>
+            <ul class="list-unstyled">
+              <li><i class="bi bi-geo-alt-fill me-2"></i> 123 E-Commerce St, Tech City, TC 90210</li>
+              <li><i class="bi bi-phone-fill me-2"></i> +1 (123) 456-7890</li>
+              <li><i class="bi bi-envelope-fill me-2"></i> support@mystore.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row footer-bottom text-center">
+          <div class="col-12">
+            <p class="mb-0">&copy; 2024 MyStore. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const navbarCollapse = document.getElementById('navbarSupportedContent');
+        const mobileSearchRow = document.querySelector('.mobile-search-row');
+        // Hide search bar when navbar expands
+        navbarCollapse.addEventListener('show.bs.collapse', function () {
+          if (mobileSearchRow) {
+            mobileSearchRow.style.display = 'none';
+          }
+        });
+        // Show search bar again when navbar collapses
+        navbarCollapse.addEventListener('hide.bs.collapse', function () {
+          if (mobileSearchRow) {
+            mobileSearchRow.style.display = '';
+          }
+        });
+      });
+    </script>
+        <script>
+        const carouselWrapper = document.querySelector('.category-cards-wrapper');
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        const dots = document.querySelectorAll('.carousel-dots .dot');
+        const cardWidth = document.querySelector('.category-card') ? document.querySelector('.category-card').offsetWidth + 20 : 0; // Card width + margin
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            if (cardWidth === 0) return; // Prevent error if cardWidth isn't set yet
+            carouselWrapper.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        if (leftArrow && rightArrow && carouselWrapper && dots.length > 0) {
+            leftArrow.addEventListener('click', () => {
+                currentIndex = Math.max(0, currentIndex - 1);
+                updateCarousel();
+            });
+
+            rightArrow.addEventListener('click', () => {
+                const maxIndex = carouselWrapper.children.length - Math.floor(carouselWrapper.offsetWidth / cardWidth);
+                currentIndex = Math.min(maxIndex, currentIndex + 1);
+                updateCarousel();
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+
+            // Initial update
+            updateCarousel();
+        }
+    </script>
+  </body>
+  </html>

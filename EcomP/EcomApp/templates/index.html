@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden mb-5 d-flex align-items-center">
+  <div class="container-fluid px-0 hero-content-container">
+    <div class="row g-0">
+      <div class="col-lg-6 d-flex align-items-center hero-text-col p-4 p-md-5 p-lg-0">
+        <div class="text-center text-lg-start mx-auto p-4 p-lg-5 hero-text-wrapper">
+          <h1 class="display-4 fw-bold mb-3">Discover the Future of Tech</h1>
+          <p class="lead mb-4 opacity-75">
+            Explore our curated collection of the latest smartphones, laptops, TVs, and more.
+            Unbeatable prices and cutting-edge innovation await!
+          </p>
+          <div class="d-grid d-sm-flex justify-content-center justify-content-lg-start gap-3">
+            <a href="{% url 'index' %}" class="btn btn-primary btn-lg px-4 py-2 fw-bold">Shop Now</a>
+            <a href="#" class="btn btn-outline-light btn-lg px-4 py-2">Learn More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 hero-image-col d-none d-lg-block">
+        <!-- Placeholder for hero image on desktop -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <!-- Sidebar Filters -->
+  <aside class="sidebar">
+    <!-- Category Filter -->
+    <div class="filter-section">
+      <div class="filter-title">Filter By Category</div>
+      <div class="category-list">
+        <a href="/" class="category-link">All Categories</a>
+        <a href="{% url 'watchList' %}" class="category-link">Watches</a>
+        <a href="{% url 'laptopList' %}" class="category-link">Laptops</a>
+        <a href="{% url 'mobileList' %}" class="category-link">Mobile Phones</a>
+      </div>
+    </div>
+
+    <!-- Price Filter -->
+    <div class="filter-section">
+      <div class="filter-title">Filter By Price</div>
+      <form method="post" action="{% url 'range' %}">
+        {% csrf_token %}
+        <div class="price-inputs">
+          <input type="text" name="min" placeholder="Min" id="Input1">
+          <input type="text" name="max" placeholder="Max" id="Input2">
+        </div>
+        <button type="submit" class="apply-btn">Search</button>
+      </form>
+    </div>
+
+    <!-- Sort Filter -->
+    <div class="filter-section">
+      <div class="filter-title">Sort By Price</div>
+      <div class="category-list">
+        <a href="{% url 'sorth' %}" class="category-link">High to Low</a>
+        <a href="{% url 'sort' %}" class="category-link">Low to High</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Product Grid -->
+  <main class="products-area">
+    <div class="products-header">
+      <h2>All Products</h2>
+    </div>
+    <div class="product-grid">
+      {% for x in products %}
+      <div class="card">
+        <img src="{{ x.image.url }}" alt="{{ x.product_name }}" class="card-img">
+        <div class="card-body">
+          <div class="text-link">
+            <a href="/view/{{ x.product_id }}">
+              <h3 class="card-title">{{ x.product_name }}</h3>
+              <p>{{ x.category }}</p>
+              <div class="card-price"><span>MRP: </span>₹{{ x.price }}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+</div>
+{% endblock %}
